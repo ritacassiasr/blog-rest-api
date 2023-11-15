@@ -11,6 +11,31 @@ const userPost = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const { response, status } = await userService.getAllUsers(req.body);
+    return res.status(status).json(response);
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: 'Erro Interno', error: err.message });
+  }
+};
+
+const getId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { response, status } = await userService.getId(id);
+    res.status(status).json(response);
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: 'Erro Interno', error: err.message });
+  }
+};
+
 module.exports = {
   userPost,
+  getAllUsers,
+  getId,
 };

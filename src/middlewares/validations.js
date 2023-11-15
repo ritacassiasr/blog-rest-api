@@ -1,5 +1,5 @@
-const { authenticateToken } = require('../utils/JWT');
 const { User } = require('../models');
+const { authenticateToken } = require('../utils/JWT');
 
 const validationLogin = (req, res, next) => {
   const { email, password } = req.body;
@@ -42,11 +42,13 @@ const validationPassword = (req, res, next) => {
   next();
 };
 
-const validationToken = async (req, res, next) => {
-  const token = req.header('authorization');
-  if (!token) return res.status(401).json({ message: 'Token not found' });
-  const { validToken } = authenticateToken(token);
-  if (!validToken) return res.status(401).json({ message: 'Expired or invalid token' }); 
+const validationToken = (req, res, next) => {
+  const { authorization } = req.headers;
+  if (!authorization) { return res.status(401).json({ message: 'Token not found' }); }
+  const { validToken } = authenticateToken(authorization);
+  if (!validToken) {
+    return res.status(401).json({ message: 'Expired or invalid token' });
+  }
   next();
 };
 

@@ -1,8 +1,14 @@
 const router = require('express').Router();
 const userController = require('../controller/userController');
-const { validationDisplayName,
+const {
+  validationDisplayName,
   validationPassword,
-  validationEmail } = require('../middlewares/validations');
+  validationEmail,
+  validationToken,
+} = require('../middlewares/validations');
+
+router.get('/', validationToken, userController.getAllUsers);
+router.get('/:id', userController.getId);
 
 router.post(
   '/',
