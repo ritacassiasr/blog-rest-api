@@ -8,6 +8,15 @@ const generateToken = (name, email, id) => {
   return token;
 };
 
+const authenticateToken = (token) => {
+  try {
+    const userAuth = jwt.verify(token, secret);
+    return { validToken: true, userAuth };
+  } catch (error) {
+    return false;
+  }
+};
 module.exports = {
   generateToken,
+  authenticateToken,
 };
