@@ -13,9 +13,10 @@ const authenticateToken = (token) => {
     const userAuth = jwt.verify(token, secret);
     return { validToken: true, userAuth };
   } catch (error) {
-    return false;
+    return { validToken: false, error: 'Token inválido' };
   }
 };
+
 module.exports = {
   generateToken,
   authenticateToken,

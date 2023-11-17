@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Category } = require('../models');
 const { authenticateToken } = require('../utils/JWT');
 
 const validationLogin = (req, res, next) => {
@@ -21,6 +21,15 @@ const validationDisplayName = (req, res, next) => {
   }
   next();
 };
+
+const validationName = (req, res, next) => {
+  const { name } = req.body;
+  if (!name || name === '') {
+    return res.status(400).json({ message: '"name" is required' });
+  }
+  next();
+};
+
 const validationEmail = async (req, res, next) => {
   const { email } = req.body;
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -41,13 +50,37 @@ const validationPassword = (req, res, next) => {
   }
   next();
 };
-
 const validationToken = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization) { return res.status(401).json({ message: 'Token not found' }); }
-  const { validToken } = authenticateToken(authorization);
+  const authorizationWithoutBearer = authorization.split(' ');
+  const { validToken, userAuth } = authenticateToken(
+    authorizationWithoutBearer[1],
+  );
   if (!validToken) {
     return res.status(401).json({ message: 'Expired or invalid token' });
+  }
+  req.user = userAuth;
+  next();
+};
+
+const validationNewPost = async (req, res, next) => {
+  const { title, content, categoryIds } = req.body;
+
+  if (!title || !content || !categoryIds) {
+    return res
+      .status(400)
+      .json({ message: 'Some required fields are missing' });
+  }
+
+  const categories = await Category.findAll({
+    where: { id: categoryIds },
+  });
+
+  if (categories.length !== categoryIds.length) {
+    return res
+      .status(400)
+      .json({ message: 'one or more "categoryIds" not found' });
   }
   next();
 };
@@ -58,4 +91,6 @@ module.exports = {
   validationEmail,
   validationPassword,
   validationToken,
+  validationName,
+  validationNewPost,
 };

@@ -8,7 +8,7 @@ const {
 } = require('../middlewares/validations');
 
 router.get('/', validationToken, userController.getAllUsers);
-router.get('/:id', userController.getId);
+router.get('/:id', validationToken, userController.getId);
 
 router.post(
   '/',
