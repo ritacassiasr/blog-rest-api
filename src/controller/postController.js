@@ -4,8 +4,7 @@ const newPost = async (req, res) => {
   try {
     const { title, content, categoryIds } = req.body;
     const { id } = req.user;
-    console.log(req.user);
-
+    
     const createdPost = await postService.newPost({
       title,
       content,
@@ -20,9 +19,9 @@ const newPost = async (req, res) => {
   }
 };
 
-const getPost = async (req, res) => {
+const getPost = async (_req, res) => {
   try {
-    const { status, response } = await postService.getPost(req.body);
+    const { status, response } = await postService.getPost();
     res.status(status).json(response);
   } catch (err) {
     return res
@@ -33,12 +32,21 @@ const getPost = async (req, res) => {
 
 const getIdPost = async (req, res) => {
   try {
-    const { status, response } = await postService.getIdPost(req.body);
+    const { status, response } = await postService.getIdPost(req.params.id);
     res.status(status).json(response);
   } catch (err) {
     return res
       .status(500)
-      .json({ message: 'Erro Interno', error: err.message });
+      .json({ message: 'Erro Interno', error: err });
+  }
+};
+
+const putPost = async (req, res) => {
+  try {
+    const { status, response } = await postService.putPost(req.body, req.params.id);
+    res.status(status).json(response);
+  } catch (err) {
+    return res.status(500).json({ message: 'Erro Interno', error: err.message });
   }
 };
 
@@ -46,4 +54,5 @@ module.exports = {
   newPost,
   getPost,
   getIdPost,
+  putPost,
 };

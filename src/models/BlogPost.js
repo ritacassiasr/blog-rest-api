@@ -13,8 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       content: DataTypes.STRING,
       userId: {
-        type: DataTypes.INTEGER,
-        foreingKey: true,
+      type: DataTypes.INTEGER,
       },
       published: DataTypes.DATE,
       updated: DataTypes.DATE,
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
 	BlogPost.associate = (models) => {
 		BlogPost.belongsTo(models.User, {
 			as: 'user',
-			foreingKey: 'userId',
-		})
+			foreignKey: 'userId',
+		});
 	}
 
   return BlogPost;
