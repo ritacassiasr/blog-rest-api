@@ -85,6 +85,16 @@ const validationNewPost = async (req, res, next) => {
   next();
 };
 
+const validationUpdatePost = async (req, res, next) => {
+  const { title, content } = req.body;
+  if (!title || !content) {
+    return res
+      .status(400)
+      .json({ message: 'Some required fields are missing' });
+  }
+  next();
+};
+
 module.exports = {
   validationLogin,
   validationDisplayName,
@@ -93,4 +103,5 @@ module.exports = {
   validationToken,
   validationName,
   validationNewPost,
+  validationUpdatePost,
 };

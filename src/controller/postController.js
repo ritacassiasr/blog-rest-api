@@ -13,9 +13,7 @@ const newPost = async (req, res) => {
     });
     return res.status(201).json(createdPost);
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: 'Erro Interno', error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -37,16 +35,34 @@ const getIdPost = async (req, res) => {
   } catch (err) {
     return res
       .status(500)
-      .json({ message: 'Erro Interno', error: err });
+      .json({ message: 'Erro Interno', error: err.message });
   }
 };
 
 const putPost = async (req, res) => {
   try {
-    const { status, response } = await postService.putPost(req.body, req.params.id);
+    const { status, response } = await postService.putPost(
+      req.body,
+      req.params.id,
+      req.user,
+    );
     res.status(status).json(response);
   } catch (err) {
     return res.status(500).json({ message: 'Erro Interno', error: err.message });
+  }
+};
+
+const deletePost = async (req, res) => {
+  try {
+    const { status, response } = await postService.putPost(
+      req.params.id,
+      req.headers.authorization,
+    );
+    res.status(status).json(response);
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: 'Erro Interno', error: err.message });
   }
 };
 
@@ -55,4 +71,5 @@ module.exports = {
   getPost,
   getIdPost,
   putPost,
+  deletePost,
 };

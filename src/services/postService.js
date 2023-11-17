@@ -57,8 +57,34 @@ const getIdPost = async (id) => {
   return { status: 200, response: getId };
 };
 
+const putPost = async (newDataPost, postId, user) => {
+  // buscando o post que será alterado
+  const dataPost = await BlogPost.findOne({
+    where: { id: postId },
+    include: [{ model: User, as: 'user', attributes: { excludes: 'password' } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  // validando que não é possível editar um blogpost com outro usuário  
+  const { id } = user;
+  if (dataPost.userId !== id) {
+    return {
+      status: 401, response: { message: 'Unauthorized user' },
+    };
+  }
+  // fazendo o update de dataPost e retornando status 200
+  await dataPost.update(newDataPost);
+  return { status: 200, response: dataPost };
+};
+
+const deletePost = async () => {
+
+};
+
 module.exports = {
   newPost,
   getPost,
   getIdPost,
+  putPost,
+  deletePost,
 };
