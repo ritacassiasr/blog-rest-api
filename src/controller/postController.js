@@ -54,9 +54,9 @@ const putPost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const { status, response } = await postService.putPost(
+    const { status, response } = await postService.deletePost(
       req.params.id,
-      req.headers.authorization,
+      req.user,
     );
     res.status(status).json(response);
   } catch (err) {

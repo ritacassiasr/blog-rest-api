@@ -78,8 +78,21 @@ const putPost = async (newDataPost, postId, user) => {
   return { status: 200, response: dataPost };
 };
 
-const deletePost = async () => {
-
+const deletePost = async (postId, user) => {
+  const dataPost = await BlogPost.findOne({ where: { id: postId } });
+  if (!dataPost) {
+    return { status: 404, response: { message: 'Post does not exist' } };
+  }
+  // validando que não é possível editar um blogpost com outro usuário
+  const { id } = user;
+  if (dataPost.userId !== id) {
+    return {
+      status: 401,
+      response: { message: 'Unauthorized user' },
+    };
+  }
+  await BlogPost.destroy({ where: { id: postId } });
+  return { status: 204 };
 };
 
 module.exports = {
