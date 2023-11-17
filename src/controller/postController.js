@@ -28,9 +28,9 @@ const getPost = async (_req, res) => {
   }
 };
 
-const getIdPost = async (req, res) => {
+const getPost = async (req, res) => {
   try {
-    const { status, response } = await postService.getIdPost(req.params.id);
+    const { status, response } = await postService.getPost(req.body);
     res.status(status).json(response);
   } catch (err) {
     return res
