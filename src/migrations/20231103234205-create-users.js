@@ -29,7 +29,6 @@ module.exports = {
       },
       {
         timestamps: false,
-        tableName: "users",
       }
     );
   },

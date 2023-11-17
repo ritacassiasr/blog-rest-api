@@ -7,18 +7,18 @@ module.exports = (sequelize, DataTypes) => {
       postId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        references: {
-          model: "BlogPost",
-          key: "id",
-        },
+        // references: {
+        //   model: "BlogPost",
+        //   key: "id",
+        // },
       },
       categoryId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        references: {
-          model: "Category",
-          key: "id",
-        },
+        // references: {
+        //   model: "Category",
+        //   key: "id",
+        // },
       },
     },
     {

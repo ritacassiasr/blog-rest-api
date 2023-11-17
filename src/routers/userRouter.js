@@ -9,7 +9,6 @@ const {
 
 router.get('/', validationToken, userController.getAllUsers);
 router.get('/:id', validationToken, userController.getId);
-
 router.post(
   '/',
   validationDisplayName,
@@ -17,5 +16,6 @@ router.post(
   validationEmail,
   userController.userPost,
 );
+router.delete('/me', validationToken, userController.deleteUser);
 
 module.exports = router;
