@@ -24,10 +24,10 @@ const newPost = async ({ title, content, categoryIds, userId }) => {
 
 const getPost = async () => {
   const allPost = await BlogPost.findAll({
-    includes: [{
+    include: [{
       model: User,
       as: 'user',
-      attributes: { excludes: 'password' },
+      attributes: { exclude: 'password' },
     }, {
       model: Category,
       as: 'categories',
