@@ -20,9 +20,9 @@ const newPost = async (req, res) => {
   }
 };
 
-const getPost = async (req, res) => {
+const getPost = async (_req, res) => {
   try {
-    const { status, response } = await postService.getPost(req.body);
+    const { status, response } = await postService.getPost();
     res.status(status).json(response);
   } catch (err) {
     return res

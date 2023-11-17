@@ -1,5 +1,4 @@
 const { BlogPost, PostCategory, User, Category } = require('../models');
-// const { authenticateToken } = require('../utils/JWT');
 
 const newPost = async ({ title, content, categoryIds, userId }) => {
   const dataPost = { title, content, categoryIds, userId };
@@ -25,31 +24,38 @@ const newPost = async ({ title, content, categoryIds, userId }) => {
 
 const getPost = async () => {
   const allPost = await BlogPost.findAll({
-    includes: [{
-      model: User,
-      as: 'user',
-      attributes: { excludes: 'password' },
-    }, {
-      model: Category,
-      as: 'categories',
-      thorough: { attributes: [] },
-    }],
+    includes: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { excludes: 'password' },
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
   });
+  console.log(allPost);
   return { status: 200, response: allPost };
 };
 
 const getIdPost = async (id) => {
-  const getId = await BlogPost.findOne({ 
+  const getId = await BlogPost.findOne({
     where: { id },
-    include: [{
-      model: User,
-      as: 'user',
-      attributes: { exclude: 'password' },
-    }, {
-      model: Category,
-      as: 'categories',
-      through: { attributes: [] },
-    }],
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: 'password' },
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
   });
   return { status: 200, response: getId };
 };
