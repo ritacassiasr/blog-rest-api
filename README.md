@@ -8,7 +8,7 @@ Desenvolvendo uma API RESTful utilizando a arquitetura em camadas (MSC) em Node.
   <a href="#-habilidades">Habilidades</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-ferramentas">Ferramentas</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-desenvolvimento">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-acessando-repositório">Repositório</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-repositório">Repositório</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
 
 <br>
@@ -37,7 +37,7 @@ Desenvolvendo uma API RESTful utilizando a arquitetura em camadas (MSC) de um bl
 
 <br>
 
-## 💻 Acessando o repositório
+## 💻 Repositório
 
 Clone o repositório
   * `git clone git@github.com:ritacassiasr/blog-rest-api.git`
